@@ -61,22 +61,22 @@ class IMUData:
             return False
 
         if 'accx_offset' in calibration_data:
-            self.acc_scale = tuple(map(float, [calibration_data['acc{}_scale'.format(x)] for x in axes]))
-            self.acc_offsets = tuple(map(float, [calibration_data['acc{}_offset'.format(x)] for x in axes]))
+            self.acc_scale = tuple(map(float, [calibration_data[f'acc{x}_scale'] for x in axes]))
+            self.acc_offsets = tuple(map(float, [calibration_data[f'acc{x}_offset'] for x in axes]))
             self.has_acc_calib = True
         else:
             self.acc_scale = ( 1., 1., 1.)
             self.acc_offsets = ( 0, 0, 0 )
             
         if 'gyrox_offset' in calibration_data:
-            self.gyro_offsets = tuple(map(float, [calibration_data['gyro{}_offset'.format(x)] for x in axes]))
+            self.gyro_offsets = tuple(map(float, [calibration_data[f'gyro{x}_offset'] for x in axes]))
             self.has_gyro_calib = True
         else:
             self.gyro_offsets = ( 0, 0, 0 )
 
         if 'magx_offset' in calibration_data:
-            self.mag_scale = tuple(map(float, [calibration_data['mag{}_scale'.format(x)] for x in axes]))
-            self.mag_offsets = tuple(map(float, [calibration_data['mag{}_offset'.format(x)] for x in axes]))
+            self.mag_scale = tuple(map(float, [calibration_data[f'mag{x}_scale'] for x in axes]))
+            self.mag_offsets = tuple(map(float, [calibration_data[f'mag{x}_offset'] for x in axes]))
             self.has_mag_calib = True
         else:
             self.mag_offsets = ( 1., 1., 1. )
@@ -115,5 +115,5 @@ class IMUData:
             self._packet_metadata.pop()
 
     def __repr__(self):
-        return '[{}] acc={}, mag={}, gyro={}, seq={}'.format(self.index, self.acc, self.mag, self.gyro, self.seq)
+        return f'[{self.index}] acc={self.acc}, mag={self.mag}, gyro={self.gyro}, seq={self.seq}'
 

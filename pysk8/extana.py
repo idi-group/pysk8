@@ -24,6 +24,6 @@ class ExtAnaData(object):
         self.seq = seq
         self.timestamp = timestamp
 
-    def __repr__(self):
-        return 'ch1={}, ch2={}, temp={:.1f}, seq={}'.format(self.ch1, self.ch2, self.temp, self.seq)
+    def __repr__(self) -> str:
+        return f'ch1={self.ch1}, ch2={self.ch2}, temp={self.temp:.1f}, seq={self.seq}'
 

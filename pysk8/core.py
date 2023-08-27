@@ -149,14 +149,14 @@ class SK8:
             logger.error('No connected device')
             return False
 
-        logger.debug('Loading calibration for {}'.format(self._client.address))
+        logger.debug(f'Loading calibration for {self._client.address}')
         calibration_data = ConfigParser()
         path = calibration_file or os.path.join(os.getcwd(), 'sk8calib.ini')
-        logger.debug('Attempting to load calibration from {}'.format(path))
+        logger.debug(f'Attempting to load calibration from {path}')
         calibration_data.read(path)
         success = False
         for i in range(MAX_IMUS):
-            s = '{}_IMU{}'.format(self._name, i)
+            s = f'{self._name}_IMU{i}'
             if s in calibration_data.sections():
                 logger.debug(f'Calibration data for device {s} was detected, extracting...')
                 success = success or self._imus[i].load_calibration(calibration_data[s])
