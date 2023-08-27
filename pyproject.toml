@@ -5,13 +5,11 @@ max-line-length = 125
 select = ["E", "F", "B"]
 ignore = ["F401"]
 line-length = 125
-#src = [".", "/compiled_protobufs"]
+
 [tool.ruff.isort]
 split-on-trailing-comma = true
 
 [tool.pyright]
-# stubPath = "./compiled_protobufs"
-# extraPaths = ["./compiled_protobufs"]
 typeCheckingMode = "basic"
 reportImportCycles = "information"
 reportUnusedImport = "none"
