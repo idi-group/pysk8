@@ -30,9 +30,12 @@ from .constants import (
     UUID_IMU_SELECTION,
     UUID_SENSOR_SELECTION,
     UUID_IMU_CCC,
+    UUID_EXTANA_CCC,
+    UUID_EXTANA_IMU_STREAMING,
+    UUID_EXTANA_IMU_STREAMING_TMP,
+    IMU_DATA_STRUCT,
+    EXTANA_DATA_STRUCT,
 )
-
-IMU_DATA_STRUCT = struct.Struct('<hhhhhhhhhBB')
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
