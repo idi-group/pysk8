@@ -5,7 +5,7 @@ from . import core
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
-def setLoglevel(lvl: int =logging.WARN) -> None:
+def setCoreLogLevel(lvl: int) -> None:
     """
     Shortcut method to set pysk8.core loglevel
     

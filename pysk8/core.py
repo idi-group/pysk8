@@ -38,7 +38,7 @@ from .constants import (
 )
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 
 # bleak seems to log at DEBUG level by default which is very verbose
 bleak_logger = logging.getLogger('bleak').setLevel(logging.WARN)
@@ -834,7 +834,7 @@ class SK8:
         """
         if self._client is None or not self._client.is_connected:
             logger.error('No device configured or connected')
-            return
+            return None
 
         if uuid in self._uuid_chars:
             logger.debug(f'Returning cached info for char: {uuid}')
