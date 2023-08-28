@@ -666,15 +666,18 @@ class SK8:
 
     def _imu_callback(self, _: BleakGATTCharacteristic, data: bytearray) -> None:
         _data = IMU_DATA_STRUCT.unpack(data)
-        self._update_sensors(_data[:3], _data[3:6], _data[6:9], _data[9], _data[10], time.time())
-
-    def _update_sensors(self, acc: Sequence[float], gyro: Sequence[float], mag: Sequence[float], imu: int, seq: int, timestamp: float) -> None:
+        #self._update_sensors(_data[:3], _data[3:6], _data[6:9], _data[9], _data[10], time.time())
+        acc, gyro, mag, imu, seq = _data[:3], _data[3:6], _data[6:9], _data[9], _data[10]
+        timestamp = time.time()
         self._imus[imu].update(acc, gyro, mag, seq, timestamp)
         # call the registered IMU callback if any
         if self._user_imu_callback is not None:
             self._user_imu_callback(acc, gyro, mag, imu, seq, timestamp, self._user_imu_callback_data)
 
-    def _update_extana(self, ch1: int, ch2: int, temp: int, seq: int, timestamp: float) -> None:
+    def _extana_callback(self, _: BleakGATTCharacteristic, data: bytearray) -> None:
+        _data = EXTANA_DATA_STRUCT.unpack(data)
+        ch1, ch2, temp, seq = _data[0], _data[1], _data[2], _data[3]
+        timestamp = time.time()
         self._extana_data.update(ch1, ch2, temp, seq, timestamp)
         # call the registered ExtAna callback if any
         if self._user_extana_callback is not None:
