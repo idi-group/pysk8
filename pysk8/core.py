@@ -281,11 +281,29 @@ class SK8:
             logger.error('No connected device')
             return False
 
-        # TODO reimplement
+        # if we want to stream the internal IMU data too, set this up first
+        await self.enable_imu_streaming([0], enabled_sensors)
+
+        extana_imu_streaming_handle = self._get_characteristic_handle_from_uuid(UUID_EXTANA_IMU_STREAMING)
+        extana_imu_streaming_tmp_handle = self._get_characteristic_handle_from_uuid(UUID_EXTANA_IMU_STREAMING_TMP)
+        if extana_imu_streaming_handle is None and extana_imu_streaming_tmp_handle is None:
+            logger.error('Failed to find handle for ExtAna configuration')
+            return False
+
+        # write to the characteristic that will enable sending of IMU packets while 
+        # the ExtAna streaming is active
+        if extana_imu_streaming_handle is not None:
+            await self._write_attribute(extana_imu_streaming_handle, struct.pack('B', 1 if include_imu else 0))
+        elif extana_imu_streaming_tmp_handle is not None:
+            await self._write_attribute(extana_imu_streaming_tmp_handle, struct.pack('B', 1 if include_imu else 0))
+
+        await self._client.start_notify(self._get_characteristic_from_uuid(UUID_EXTANA_CCC), self._extana_callback)
+
+        self._enabled_sensors = enabled_sensors
 
         # have to add IMU #0 to enabled_imus if include_imu is True
         if include_imu:
-            self.enabled_imus = [0]
+            self._enabled_imus = [0]
 
         return True
 
@@ -296,9 +314,16 @@ class SK8:
         Returns:
             True on success, False if an error occurred.
         """
-        self.enabled_imus = []
+        if self._client is None or not self._client.is_connected:
+            logger.error('No device configured or connected')
+            return False
 
-        return False # TODO reimplement
+        await self._client.stop_notify(self._get_characteristic_from_uuid(UUID_EXTANA_CCC))
+        # reset IMU data state
+        for imu in self._imus:
+            imu.reset()
+        self._enabled_imus = []
+        return True
 
     async def get_extana_led(self, cached: bool = True) -> Tuple[int, int, int]:
         """
