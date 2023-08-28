@@ -43,6 +43,7 @@ UUID_POLLING_OVERRIDE                    = 'b9e3226a-1074-11e6-a7d5-0002a5d5c51b
 
 # TODO messed up UUIDs in FW up to and including v0.0.2.0, so have to check
 # for existence of both old and correct versions of these two
+# (28-08-23: should probably remove these now that most devices are updated!)
 UUID_EXTANA_IMU_STREAMING                = 'b9e32286-1074-11e6-a7d5-0002a5d5c51b'
 UUID_EXTANA_IMU_STREAMING_TMP            = 'b9e32268-1074-11e6-a7d5-0002a5d5c51b'
 UUID_HARDWARE_STATE                      = 'b9e32269-1074-11e6-a7d5-0002a5d5c51b'
