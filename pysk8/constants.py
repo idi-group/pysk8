@@ -10,7 +10,7 @@ Attributes:
 import struct
 
 IMU_DATA_STRUCT                          = struct.Struct('<hhhhhhhhhBB')
-ANA_DATA_STRUCT                          = struct.Struct('<HHHB')
+EXTANA_DATA_STRUCT                       = struct.Struct('<HHHB')
 MAX_IMUS                                 = 5
 DEF_TIMEOUT                              = 3
 
