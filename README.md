@@ -6,7 +6,7 @@ This repo is a reimplementation of the original [SK8 Python driver](https://gith
 
 ## Installing 
 
-TODO - update pypi
+Run `uv sync`.
 
 ## Usage
 
